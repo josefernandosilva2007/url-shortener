@@ -1,5 +1,7 @@
 package com.jfernando.url_shortener;
 
+import com.jfernando.url_shortener.exception.InvalidSlugException;
+
 public class Base62UrlShortener implements UrlShortener{
 
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -19,8 +21,13 @@ public class Base62UrlShortener implements UrlShortener{
     @Override
     public Long decode(String shortUrl) {
         long result = 0;
+
         for(int i = 0; i < shortUrl.length(); i++){
             int index = ALPHABET.indexOf(shortUrl.charAt(i));
+
+            if(index < 0) throw new InvalidSlugException("Invalid Character");
+
+
             result = (result * ALPHABET.length()) + index;
         }
         return result;
