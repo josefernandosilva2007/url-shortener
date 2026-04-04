@@ -13,5 +13,12 @@ class Base62UrlShortenerTest {
         Assertions.assertEquals("13",result);
     }
 
+    @Test
+    void shouldReturn65WhenStringIs13(){
+        Base62UrlShortener id = new Base62UrlShortener();
+        Long decode = id.decode("13");
+        Assertions.assertEquals(65L, decode);
+    }
+
 
 }

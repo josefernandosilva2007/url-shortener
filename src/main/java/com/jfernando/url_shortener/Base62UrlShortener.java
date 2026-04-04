@@ -18,6 +18,11 @@ public class Base62UrlShortener implements UrlShortener{
 
     @Override
     public Long decode(String shortUrl) {
-        return 0L;
+        long result = 0;
+        for(int i = 0; i < shortUrl.length(); i++){
+            int index = ALPHABET.indexOf(shortUrl.charAt(i));
+            result = (result * ALPHABET.length()) + index;
+        }
+        return result;
     }
 }
