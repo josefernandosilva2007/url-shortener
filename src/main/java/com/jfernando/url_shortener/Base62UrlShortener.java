@@ -1,7 +1,9 @@
 package com.jfernando.url_shortener;
 
 import com.jfernando.url_shortener.exception.InvalidSlugException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Base62UrlShortener implements UrlShortener{
 
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
