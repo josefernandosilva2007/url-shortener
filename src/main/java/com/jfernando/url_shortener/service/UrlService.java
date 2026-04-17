@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UrlService {
@@ -14,8 +16,8 @@ public class UrlService {
     private final Base62UrlShortener shorten;
 
     @Transactional
-    public Url shortenUrl(String longUrl){
-        return repo.findByOriginalUrl(longUrl).orElseGet( () -> {
+    public Url shortenUrl(String longUrl) {
+        return repo.findByOriginalUrl(longUrl).orElseGet(() -> {
             Url url = new Url();
             url.setOriginalUrl(longUrl);
 
@@ -26,5 +28,10 @@ public class UrlService {
 
             return repo.save(url);
         });
+    }
+
+    public Url originalUrl(String shortUrl){
+        Long decode = shorten.decode(shortUrl);
+        return repo.findById(decode).orElseThrow(() -> new RuntimeException("Id not found"));
     }
 }
