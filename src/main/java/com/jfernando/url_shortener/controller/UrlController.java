@@ -10,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/urls")
@@ -25,7 +24,13 @@ public class UrlController {
     public ResponseEntity<UrlResponse> shortUrl(@Valid @RequestBody UrlRequest request){
         Url originalUrl = urlService.shortenUrl(request.originalUrl());
         String shortUrl = "http://localhost:8080/" + originalUrl.getShortUrl();
-        return ResponseEntity.status(HttpStatus.OK).body(new UrlResponse(shortUrl));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UrlResponse(shortUrl));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UrlResponse> redirectToOriginalUrl(@Valid @PathVariable String id){
+        Url url = urlService.originalUrl(id);
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url.getOriginalUrl())).build();
     }
 
 
