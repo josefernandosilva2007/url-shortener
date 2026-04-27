@@ -30,8 +30,8 @@ public class UrlService {
         });
     }
 
-    public Url originalUrl(String shortUrl){
-        Long decode = shorten.decode(shortUrl);
+    public Url originalUrl(String slug){
+        Long decode = shorten.decode(slug);
         return repo.findById(decode).orElseThrow(() -> new RuntimeException("Id not found"));
     }
 }

@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/urls")
+@RequestMapping
 @RequiredArgsConstructor
 public class UrlController {
     private final UrlService urlService;
 
-    @PostMapping("/shorten")
+    @PostMapping("/v1/shorten")
     public ResponseEntity<UrlResponse> shortUrl(@Valid @RequestBody UrlRequest request){
         Url originalUrl = urlService.shortenUrl(request.originalUrl());
         String shortUrl = "http://localhost:8080/" + originalUrl.getShortUrl();
         return ResponseEntity.status(HttpStatus.CREATED).body(new UrlResponse(shortUrl));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UrlResponse> redirectToOriginalUrl(@Valid @PathVariable String id){
-        Url url = urlService.originalUrl(id);
+    @GetMapping("/{slug}")
+    public ResponseEntity<Void> redirectToOriginalUrl(@Valid @PathVariable String slug){
+        Url url = urlService.originalUrl(slug);
         return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url.getOriginalUrl())).build();
     }
 
