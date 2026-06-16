@@ -2,6 +2,7 @@ package com.jfernando.url_shortener.service;
 
 import com.jfernando.url_shortener.Base62UrlShortener;
 import com.jfernando.url_shortener.entity.Url;
+import com.jfernando.url_shortener.exception.ResourceNotFound;
 import com.jfernando.url_shortener.repository.UrlRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,6 @@ public class UrlService {
 
     public Url originalUrl(String slug){
         Long decode = shorten.decode(slug);
-        return repo.findById(decode).orElseThrow(() -> new RuntimeException("Id not found"));
+        return repo.findById(decode).orElseThrow(() -> new ResourceNotFound("Url not found"));
     }
 }
