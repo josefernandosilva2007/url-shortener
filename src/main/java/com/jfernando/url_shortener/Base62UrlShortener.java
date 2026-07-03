@@ -29,7 +29,6 @@ public class Base62UrlShortener implements UrlShortener{
 
             if(index < 0) throw new InvalidSlugException("Invalid Character");
 
-
             result = (result * ALPHABET.length()) + index;
         }
         return result;

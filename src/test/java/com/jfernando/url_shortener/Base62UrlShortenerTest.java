@@ -1,10 +1,8 @@
 package com.jfernando.url_shortener;
 
 import com.jfernando.url_shortener.exception.InvalidSlugException;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 class Base62UrlShortenerTest {
     @Test
