@@ -1,6 +1,7 @@
 package com.jfernando.url_shortener.service;
 
 import com.jfernando.url_shortener.Base62UrlShortener;
+import com.jfernando.url_shortener.UrlShortener;
 import com.jfernando.url_shortener.entity.Url;
 import com.jfernando.url_shortener.exception.ResourceNotFound;
 import com.jfernando.url_shortener.repository.UrlRepository;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UrlService {
     private final UrlRepository repo;
-    private final Base62UrlShortener shorten;
+    private final UrlShortener shorten;
 
     @Transactional
     public Url shortenUrl(String longUrl) {
