@@ -11,6 +11,8 @@ services:
       APP_BASE_URL: ${APP_BASE_URL}
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/18/docker
 
   app:
     build:
@@ -23,3 +25,6 @@ services:
       APP_BASE_URL: ${APP_BASE_URL}
     ports:
       - "8080:8080"
+
+volumes:
+  pgdata:
