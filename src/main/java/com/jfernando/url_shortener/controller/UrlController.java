@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -21,13 +22,19 @@ import java.net.URI;
 public class UrlController {
     private final UrlService urlService;
 
-    @Value("${app.base-url}")
+     @Value("${app.base-url}")
     private String baseUrl;
 
     @PostMapping("/v1/shorten")
     public ResponseEntity<UrlResponse> createShortUrl(@Valid @RequestBody UrlRequest request){
         Url originalUrl = urlService.shortenUrl(request.originalUrl());
-        String shortUrl = baseUrl + originalUrl.getShortUrl();
+        
+        String shortUrl = UriComponentsBuilder
+                .fromPath(baseUrl)
+                .pathSegment(originalUrl.getShortUrl())
+                .build()
+                .toUriString();
+
         return ResponseEntity.status(HttpStatus.CREATED).body(new UrlResponse(shortUrl));
     }
 
