@@ -53,7 +53,7 @@ Exemplo de requisição:
 
 ```json
 {
-  "url": "https://www.example.com"
+  "originalUrl": "https://www.example.com"
 }
 ```
 
