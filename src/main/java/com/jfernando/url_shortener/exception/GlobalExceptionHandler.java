@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(ResourceNotFound.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFound ex, WebRequest request){
         ErrorResponse error = new ErrorResponse(
@@ -23,5 +22,18 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidSlugException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidSlugException(InvalidSlugException ex, WebRequest request){
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Invalid ID",
+                ex.getMessage(),
+                request.getDescription(false) 
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
