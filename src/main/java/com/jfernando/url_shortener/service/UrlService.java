@@ -4,6 +4,7 @@ import com.jfernando.url_shortener.Base62UrlShortener;
 import com.jfernando.url_shortener.UrlShortener;
 import com.jfernando.url_shortener.entity.Url;
 import com.jfernando.url_shortener.exception.ResourceNotFound;
+import com.jfernando.url_shortener.exception.UrlLengthException;
 import com.jfernando.url_shortener.repository.UrlRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class UrlService {
 
     @Transactional
     public Url shortenUrl(String longUrl) {
+        if(longUrl.length() > 2000) throw new UrlLengthException("Url length invalid");
         return repo.findByOriginalUrl(longUrl).orElseGet(() -> {
             Url url = new Url();
             url.setOriginalUrl(longUrl);
